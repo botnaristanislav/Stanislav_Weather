@@ -1,0 +1,14 @@
+body{
+  background: #eeedec;
+  letter-spacing: 0.2em;
+  font-size: 0.8em;
+}
+.container{
+  max-width: 400px;
+}
+.my-icon{
+  position: relative;
+  border-radius: 50%;
+  bottom: 50px;
+  margin-bottom: -50px;
+}
