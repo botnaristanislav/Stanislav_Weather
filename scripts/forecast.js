@@ -6,7 +6,7 @@ const key = 'kzTjGsKXg7JXkt4sG07zTGa9aZxWKFka';
 const getLocation = async (city) => {
 
 // creating base with query
-  const base = 'http://dataservice.accuweather.com/locations/v1/cities/search';
+  const base = 'https://dataservice.accuweather.com/locations/v1/cities/search';
   const query = `?apikey=${key}&q=${city}`;
 // fetching data(base+query) with await and formatting to data we can use.
   const response = await fetch(base + query);
