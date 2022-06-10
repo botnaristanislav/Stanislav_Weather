@@ -20,7 +20,7 @@ const getLocation = async (city) => {
 const getWeather = async (cityKey) => {
 
 
-  const base = 'http://dataservice.accuweather.com/currentconditions/v1/';
+  const base = 'https://dataservice.accuweather.com/currentconditions/v1/';
   const query = `${cityKey}?apikey=${key}`;
 
   const response = await fetch(base + query);
