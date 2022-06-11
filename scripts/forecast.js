@@ -1,38 +1,40 @@
-// API key to access server's data
-const key = 'kzTjGsKXg7JXkt4sG07zTGa9aZxWKFka';
-
-// async function to get location API
-
-const getLocation = async (city) => {
-
-// creating base with query
-  const base = 'https://dataservice.accuweather.com/locations/v1/cities/search';
-  const query = `?apikey=${key}&q=${city}`;
-// fetching data(base+query) with await and formatting to data we can use.
-  const response = await fetch(base + query);
-  const data = await response.json();
-// returning data
-  return data[0];
-
-};
-
-// async func to get weather
-const getWeather = async (cityKey) => {
-
-
-  const base = 'https://dataservice.accuweather.com/currentconditions/v1/';
-  const query = `${cityKey}?apikey=${key}`;
-
-  const response = await fetch(base + query);
-  const data = await response.json();
-  // returning data
-  return data[0];
+// setting up Forecast class
+class Forecast{
+constructor(){
+  this.key = 'kzTjGsKXg7JXkt4sG07zTGa9aZxWKFka';
+  this.cityURL = 'http://dataservice.accuweather.com/locations/v1/cities/search';
+  this.weatherURL = 'http://dataservice.accuweather.com/currentconditions/v1/';
 }
 
 
-// // calling the async function(getLocation) and storing key!
-// getLocation()
-//   .then(data =>{
-//     return getWeather(data.Key)
-//   }).then(data => console.log(data))
-//   .catch(err => console.log(err));
+
+  async getLocation(city){
+    const query = `${this.cityURL}?apikey=${this.key}&q=${city}`;
+  // fetching data(base+query) with await and formatting to data we can use.
+    const response = await fetch(query);
+    const data = await response.json();
+  // returning data
+    return data[0];
+  }
+
+  async getWeather(cityKey){
+    const query = `${this.weatherURL}${cityKey}?apikey=${this.key}`;
+
+    const response = await fetch(query);
+    const data = await response.json();
+    // returning data
+    return data[0];
+  }
+
+  async updateCity(userCity){
+    // calling the async functions below
+    const cityData = await this.getLocation(userCity);
+    const weatherData = await this.getWeather(cityData.Key);
+    // returning data
+    return {
+      cityDets: cityData,
+      weather: weatherData
+    };
+
+};
+};
