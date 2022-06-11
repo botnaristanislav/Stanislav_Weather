@@ -2,26 +2,14 @@ const cityForm = document.querySelector('form');
 const textUI = document.querySelector('.details');
 const img = document.querySelector('img');
 const icon = document.querySelector('.icon');
+const forecast = new Forecast();
 let userCity = '';
 
 
 
 
 
-// async func to get all data
-const updateCity = async (city) => {
 
-  console.log(userCity)
-  // calling the async functions into vars
-  const cityData = await getLocation(userCity);
-  const weatherData = await getWeather(cityData.Key);
-
-  // returning the vars into a object
-  return {
-    cityDets: cityData,
-    weather: weatherData
-  };
-}
 
 
 // event listener to form for submit event
@@ -31,13 +19,23 @@ cityForm.addEventListener('submit', e => {
   // pushing the value into var
   userCity = e.target.city.value.trim();
   // calling the async updateCity(submitValue)
-  updateCity(userCity)
+  forecast.updateCity(userCity)
     .then(data => updateUI(data))
     .catch(err => console.log(err));
-
+  // setting up the userCity_var to local storage
+  localStorage.setItem('city', userCity);
   // resetting the form
   cityForm.reset();
 });
+
+// if there is "city" in local storage, we call updateCity_func automatically
+  if(localStorage.city){
+    forecast.updateCity(localStorage.city)
+      .then(data => updateUI(data))
+      .catch(err => console.log(err));
+  }
+
+
 
 //-----------Now we have all data let's update UI!=>
 const updateUI = ((data) => {
@@ -68,3 +66,4 @@ const updateUI = ((data) => {
 
 
 });
+
